@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.yaml.snakeyaml.events.Event;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -23,4 +20,7 @@ public class Vacation {
     private Long id;
     private LocalDate start;
     private LocalDate end;
+    @ManyToOne
+    @JoinColumn(name="fullTimeEmployee_id", nullable=false)
+    private FullTimeEmployee fullTimeEmployee;
 }

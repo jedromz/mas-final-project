@@ -1,4 +1,4 @@
 package com.mas.pjatk.masfinalproject.model;
 
-public class EmployeeOwner {
+public class EmployeeOwner extends Employee implements IOwner{
 }

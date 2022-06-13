@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.yaml.snakeyaml.events.Event;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,4 +23,7 @@ public class Shift {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
+    @ManyToOne
+    @JoinColumn(name = "employee_id",nullable = false)
+    private Employee  employee;
 }

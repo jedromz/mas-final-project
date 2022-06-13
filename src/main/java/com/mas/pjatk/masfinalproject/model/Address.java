@@ -3,10 +3,7 @@ package com.mas.pjatk.masfinalproject.model;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -19,4 +16,6 @@ public class Address {
     private String buildingNumber;
     private String postCode;
     private String city;
+    @OneToOne(mappedBy = "address")
+    private Hospital hospital;
 }
