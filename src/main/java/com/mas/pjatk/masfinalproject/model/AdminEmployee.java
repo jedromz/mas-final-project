@@ -1,13 +1,15 @@
 package com.mas.pjatk.masfinalproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Getter
+@Setter
 public class AdminEmployee {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
