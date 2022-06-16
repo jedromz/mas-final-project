@@ -8,12 +8,13 @@ import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminEmployeeToAdminEmployeeDto implements Converter<AdminEmployee, AdminEmployeeDto> {
+public class EmployeeToAdminEmployeeDto implements Converter<Employee, AdminEmployeeDto> {
     @Override
-    public AdminEmployeeDto convert(MappingContext<AdminEmployee, AdminEmployeeDto> mappingContext) {
-        AdminEmployee adminEmployee = mappingContext.getSource();
-        Employee employee = adminEmployee.getEmployee();
+    public AdminEmployeeDto convert(MappingContext<Employee, AdminEmployeeDto> mappingContext) {
+        Employee employee = mappingContext.getSource();;
         AdminEmployeeDto adminEmployeeDto = AdminEmployeeDto.builder()
+                .employeeId(employee.getId())
+                .adminEmployeeId(employee.getAdminEmployee().getId())
                 .firstname(employee.getFirstname())
                 .lastname(employee.getLastname())
                 .birthDate(employee.getBirthDate())

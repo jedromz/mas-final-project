@@ -33,6 +33,7 @@ public class Employee extends Person {
     }
 
     private BigDecimal rate;
+    private boolean deleted;
     @ElementCollection
     private List<String> mobileNumbers = new ArrayList<>();
     @ElementCollection

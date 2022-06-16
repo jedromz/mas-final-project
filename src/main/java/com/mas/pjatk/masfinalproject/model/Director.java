@@ -21,4 +21,9 @@ public class Director {
     private LocalDate termEnd;
     @OneToOne(mappedBy = "contractEmployee")
     private Employee employee;
+
+    public Director(LocalDate termStart, LocalDate termEnd) {
+        this.termStart = termStart;
+        this.termEnd = termEnd;
+    }
 }

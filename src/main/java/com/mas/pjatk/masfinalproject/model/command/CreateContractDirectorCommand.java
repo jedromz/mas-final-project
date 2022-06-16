@@ -1,6 +1,5 @@
 package com.mas.pjatk.masfinalproject.model.command;
 
-import com.mas.pjatk.masfinalproject.model.AdminEmployee;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +8,17 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class CreateAdminEmployeeCommand {
-
+public class CreateContractDirectorCommand {
     private String firstname;
     private String lastname;
     private LocalDate birthDate;
+
     private BigDecimal rate;
     private BigDecimal bonus;
+    //director
+    private LocalDate termStart;
+    private LocalDate termEnd;
+    //contract
+    private LocalDate contractStart;
+    private LocalDate contractEnd;
 }

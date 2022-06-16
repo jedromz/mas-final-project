@@ -24,5 +24,7 @@ public class FullTimeEmployee {
     @OneToMany(mappedBy = "fullTimeEmployee")
     private Set<Vacation> vacations = new HashSet<>();
 
-
+    public FullTimeEmployee(Integer workTime) {
+        this.workTime = workTime;
+    }
 }

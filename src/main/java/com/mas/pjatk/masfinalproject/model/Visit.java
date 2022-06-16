@@ -1,9 +1,6 @@
 package com.mas.pjatk.masfinalproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,6 +12,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

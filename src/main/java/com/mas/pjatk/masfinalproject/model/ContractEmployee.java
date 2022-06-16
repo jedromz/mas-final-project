@@ -22,5 +22,8 @@ public class ContractEmployee {
     @OneToOne(mappedBy = "contractEmployee")
     private Employee employee;
 
-
+    public ContractEmployee(LocalDate contractStart, LocalDate contractEnd) {
+        this.contractStart = contractStart;
+        this.contractEnd = contractEnd;
+    }
 }

@@ -1,9 +1,6 @@
 package com.mas.pjatk.masfinalproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,10 +11,12 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Owner extends Person {
 
     private String email;
     private String mobile;
+    private boolean deleted;
     @OneToMany(mappedBy = "owner")
     private Set<Patient> patients = new HashSet<>();
 }

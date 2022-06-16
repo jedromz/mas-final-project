@@ -1,9 +1,6 @@
 package com.mas.pjatk.masfinalproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +22,7 @@ public class Patient {
     private LocalDate birthDate;
     private String type;
     private String race;
+    private boolean deleted;
     @OneToMany(mappedBy = "patient")
     private Set<Visit> visits = new HashSet<>();
     @ManyToOne
