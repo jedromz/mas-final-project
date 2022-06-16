@@ -1,6 +1,7 @@
 package com.mas.pjatk.masfinalproject.service;
 
 import com.mas.pjatk.masfinalproject.error.EntityNotFoundException;
+import com.mas.pjatk.masfinalproject.mappings.ICreateEmployeeCommand;
 import com.mas.pjatk.masfinalproject.model.*;
 import com.mas.pjatk.masfinalproject.model.command.*;
 import com.mas.pjatk.masfinalproject.repository.*;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 
@@ -36,18 +38,16 @@ public class EmployeeService {
     @Transactional
     public Employee addAdminEmployeeFullTime(CreateFullTimeAdminEmployeeCommand command) {
         //create entities
-        Employee employee = modelMapper.map(command, Employee.class);
+        Employee employee = buildEmployee(command);
         AdminEmployee adminEmployee = new AdminEmployee();
-        FullTimeEmployee fullTimeEmployee = new FullTimeEmployee(command.getWorkTime());
+        FullTimeEmployee fullTimeEmployee = buildFullTimeEmployee(command.getWorkTime());
         //save entities
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
         AdminEmployee savedAdminEmployee = adminEmployeeRepository.saveAndFlush(adminEmployee);
-        fullTimeEmployeeRepository.save(fullTimeEmployeeRepository);
+        FullTimeEmployee savedFullTimeEmployee = fullTimeEmployeeRepository.saveAndFlush(fullTimeEmployee);
         //associations
-        employee.setAdminEmployee(savedAdminEmployee);
-        employee.setFullTimeEmployee(fullTimeEmployee);
-        adminEmployee.setEmployee(savedEmployee);
-        fullTimeEmployee.setEmployee(savedEmployee);
+        savedEmployee.setAdminEmployee(savedAdminEmployee);
+        savedEmployee.setFullTimeEmployee(savedFullTimeEmployee);
         return savedEmployee;
     }
 
@@ -55,54 +55,68 @@ public class EmployeeService {
     @Transactional
     public Employee addAdminEmployeeContract(CreateContractAdminEmployeeCommand command) {
         //create entities
-        Employee employee = modelMapper.map(command, Employee.class);
+        Employee employee = buildEmployee(command);
         AdminEmployee adminEmployee = new AdminEmployee();
-        ContractEmployee contractEmployee = new ContractEmployee(command.getContractStart(), command.getContractEnd());
+        ContractEmployee contractEmployee = buildContractEmployee(command.getContractStart(), command.getContractEnd());
         //save entities
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
         AdminEmployee savedAdminEmployee = adminEmployeeRepository.saveAndFlush(adminEmployee);
-        contractEmployeeRepository.save(contractEmployee);
+        ContractEmployee savedContractEmployee = contractEmployeeRepository.saveAndFlush(contractEmployee);
         //associations
-        employee.setAdminEmployee(savedAdminEmployee);
-        employee.setContractEmployee(contractEmployee);
-        adminEmployee.setEmployee(savedEmployee);
-        contractEmployee.setEmployee(savedEmployee);
+        savedEmployee.setAdminEmployee(savedAdminEmployee);
+        savedEmployee.setContractEmployee(savedContractEmployee);
         return savedEmployee;
+    }
+
+    private ContractEmployee buildContractEmployee(LocalDate command, LocalDate command1) {
+        return new ContractEmployee(command, command1);
     }
 
     @Transactional
     public Employee addVetFullTime(CreateFullTimeVetCommand command) {
         //create entities
-        Vet vet = new Vet(command.getVetLicense(), command.getSpecialization());
-        Employee employee = modelMapper.map(command, Employee.class);
-        FullTimeEmployee fullTimeEmployee = new FullTimeEmployee(command.getWorkTime());
+        Employee employee = buildEmployee(command);
+        Vet vet = buildVet(command.getVetLicense(), command.getSpecialization());
+        FullTimeEmployee fullTimeEmployee = buildFullTimeEmployee(command.getWorkTime());
         //save entities
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
         Vet savedVet = vetRepository.saveAndFlush(vet);
-        fullTimeEmployeeRepository.saveAndFlush(fullTimeEmployeeRepository);
+        FullTimeEmployee savedFullTimeEmployee = fullTimeEmployeeRepository.saveAndFlush(fullTimeEmployee);
+        //associations
+        savedEmployee.setVet(vet);
+        savedEmployee.setFullTimeEmployee(savedFullTimeEmployee);
+        return savedEmployee;
+    }
+
+    @Transactional
+    public Employee addVetContract(CreateContractVetCommand command) {
+        //create entities
+        Vet vet = buildVet(command.getVetLicense(), command.getSpecialization());
+        Employee employee = buildEmployee(command);
+        ContractEmployee contractEmployee = buildContractEmployee(command.getContractStart(), command.getContractEnd());
+        //save entities
+        Employee savedEmployee = employeeRepository.saveAndFlush(employee);
+        Vet savedVet = vetRepository.saveAndFlush(vet);
+        ContractEmployee savedContractEmployee = contractEmployeeRepository.saveAndFlush(contractEmployee);
         //associations
         employee.setVet(savedVet);
-        employee.setFullTimeEmployee(fullTimeEmployee);
-        vet.setEmployee(savedEmployee);
-        fullTimeEmployee.setEmployee(savedEmployee);
+        employee.setContractEmployee(savedContractEmployee);
         return savedEmployee;
     }
 
     @Transactional
     public Employee addDirectorContract(CreateContractDirectorCommand command) {
         //create entities
-        Employee employee = modelMapper.map(command, Employee.class);
-        AdminEmployee adminEmployee = new AdminEmployee();
-        ContractEmployee contractEmployee = new ContractEmployee(command.getContractStart(), command.getContractEnd());
+        Employee employee = buildEmployee(command);
+        Director director = buildDirector(command.getTermStart(), command.getTermEnd());
+        ContractEmployee contractEmployee = buildContractEmployee(command.getContractStart(), command.getContractEnd());
         //save entities
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
-        AdminEmployee savedAdminEmployee = adminEmployeeRepository.saveAndFlush(adminEmployee);
-        contractEmployeeRepository.save(contractEmployee);
+        Director savedDirector = directorRepository.saveAndFlush(director);
+        ContractEmployee savedContractEmployee = contractEmployeeRepository.saveAndFlush(contractEmployee);
         //associations
-        employee.setAdminEmployee(savedAdminEmployee);
-        employee.setContractEmployee(contractEmployee);
-        adminEmployee.setEmployee(savedEmployee);
-        contractEmployee.setEmployee(savedEmployee);
+        savedEmployee.setDirector(savedDirector);
+        savedEmployee.setContractEmployee(savedContractEmployee);
         return savedEmployee;
     }
 
@@ -110,39 +124,19 @@ public class EmployeeService {
     @Transactional
     public Employee addDirectorFullTime(CreateFullTimeDirector command) {
         //create entities
-        Director director = new Director(command.getTermStart(), command.getTermEnd());
-        Employee employee = modelMapper.map(command, Employee.class);
-        FullTimeEmployee fullTimeEmployee = new FullTimeEmployee(command.getWorkTime());
+        Director director = buildDirector(command.getTermStart(), command.getTermEnd());
+        Employee employee = buildEmployee(command);
+        FullTimeEmployee fullTimeEmployee = buildFullTimeEmployee(command.getWorkTime());
         //save entities
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
         Director savedDirector = directorRepository.saveAndFlush(director);
-        fullTimeEmployeeRepository.saveAndFlush(fullTimeEmployeeRepository);
+        FullTimeEmployee savedFulltimeEmployee = fullTimeEmployeeRepository.saveAndFlush(fullTimeEmployee);
         //associations
-        employee.setDirector(director);
-        employee.setFullTimeEmployee(fullTimeEmployee);
-        director.setEmployee(savedEmployee);
-        fullTimeEmployee.setEmployee(savedEmployee);
+        employee.setDirector(savedDirector);
+        employee.setFullTimeEmployee(savedFulltimeEmployee);
         return savedEmployee;
     }
 
-
-    @Transactional
-    public Employee addVetContract(CreateContractVetCommand command) {
-        //create entities
-        Vet vet = new Vet(command.getVetLicense(), command.getSpecialization());
-        Employee employee = modelMapper.map(command, Employee.class);
-        ContractEmployee contractEmployee = new ContractEmployee(command.getContractStart(), command.getContractEnd());
-        //save entities
-        Employee savedEmployee = employeeRepository.saveAndFlush(employee);
-        Vet savedVet = vetRepository.saveAndFlush(vet);
-        contractEmployeeRepository.save(contractEmployee);
-        //associations
-        employee.setVet(savedVet);
-        employee.setContractEmployee(contractEmployee);
-        vet.setEmployee(savedEmployee);
-        contractEmployee.setEmployee(savedEmployee);
-        return savedEmployee;
-    }
 
     @Transactional
     public void softDeleteById(Long id) throws EntityNotFoundException {
@@ -170,5 +164,27 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("EMPLOYEE", id.toString()));
         return employee.getFullTimeEmployee().getVacations();
+    }
+
+    private Employee buildEmployee(ICreateEmployeeCommand command) {
+        return Employee.builder()
+                .firstname(command.getFirstname())
+                .lastname(command.getLastname())
+                .birthDate(command.getBirthDate())
+                .rate(command.getRate())
+                .bonus(command.getBonus())
+                .build();
+    }
+
+    private Vet buildVet(String command, String command1) {
+        return new Vet(command, command1);
+    }
+
+    private FullTimeEmployee buildFullTimeEmployee(Integer command) {
+        return new FullTimeEmployee(command);
+    }
+
+    private Director buildDirector(LocalDate command, LocalDate command1) {
+        return new Director(command, command1);
     }
 }

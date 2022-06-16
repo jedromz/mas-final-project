@@ -1,5 +1,7 @@
 package com.mas.pjatk.masfinalproject.model.command;
 
+import com.mas.pjatk.masfinalproject.mappings.ICreateEmployeeCommand;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +10,8 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class CreateFullTimeAdminEmployeeCommand {
-
+@AllArgsConstructor
+public class CreateFullTimeAdminEmployeeCommand implements ICreateEmployeeCommand {
     private String firstname;
     private String lastname;
     private LocalDate birthDate;

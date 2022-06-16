@@ -16,7 +16,4 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Page<Employee> findByAdminEmployeeIsNotNull(Pageable pageable);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select e from Visit v left join fetch v.vacations left join fetch v.shifts where d.id = ?1")
-    Optional<Employee> findDoctorWithVisitsAndAvailabilitiesAndVacation(long id);
 }

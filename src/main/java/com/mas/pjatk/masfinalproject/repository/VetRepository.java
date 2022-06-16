@@ -10,7 +10,4 @@ import java.util.Optional;
 
 public interface VetRepository extends JpaRepository<Vet,Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select v from Vet v left join fetch v.visits where d.id = ?1")
-    Optional<Vet> findVetWithVisitsAndAvailabilitiesAndVacation(long id);
 }
