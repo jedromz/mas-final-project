@@ -1,11 +1,9 @@
 package com.mas.pjatk.masfinalproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -13,16 +11,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ContractEmployee {
+public class ContractEmployee extends Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate contractStart;
     private LocalDate contractEnd;
-    @OneToOne(mappedBy = "contractEmployee")
-    private Employee employee;
 
-    public ContractEmployee(LocalDate contractStart, LocalDate contractEnd) {
+    @Builder
+    public ContractEmployee(String firstname, String lastname, LocalDate birthDate, BigDecimal rate, BigDecimal bonus, LocalDate contractStart, LocalDate contractEnd) {
+        super(firstname, lastname, birthDate, rate, bonus);
         this.contractStart = contractStart;
         this.contractEnd = contractEnd;
     }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreateContractAdminEmployeeCommand implements ICreateEmployeeCommand {
+public class CreateContractAdminEmployeeCommand implements ICreateContractEmployee {
     private String firstname;
     private String lastname;
     private LocalDate birthDate;

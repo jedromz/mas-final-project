@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreateFullTimeVetCommand implements ICreateEmployeeCommand {
+public class CreateFullTimeVetCommand implements ICreateFulltimeEmployeeCommand {
     private String firstname;
     private String lastname;
     private LocalDate birthDate;

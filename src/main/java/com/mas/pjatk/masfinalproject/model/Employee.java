@@ -17,34 +17,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Employee extends Person {
-    @Builder
-    public Employee(String firstname, String lastname, LocalDate birthDate, BigDecimal rate, BigDecimal bonus,
-                    FullTimeEmployee fullTimeEmployee, ContractEmployee contractEmployee, Vet vet, Director director,
-                    AdminEmployee adminEmployee) {
-        super(firstname, lastname, birthDate);
-        this.rate = rate;
-        this.bonus = bonus;
-        this.fullTimeEmployee = fullTimeEmployee;
-        this.contractEmployee = contractEmployee;
-        this.vet = vet;
-        this.director = director;
-        this.adminEmployee = adminEmployee;
-    }
-
+public abstract class Employee extends Person {
     private BigDecimal rate;
     private boolean deleted;
+    private BigDecimal bonus;
     @ElementCollection
     private List<String> mobileNumbers = new ArrayList<>();
     @ElementCollection
     private List<String> emails = new ArrayList<>();
-    private BigDecimal bonus;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "full_time_employee", referencedColumnName = "id")
-    private FullTimeEmployee fullTimeEmployee;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "contract_employee", referencedColumnName = "id")
-    private ContractEmployee contractEmployee;
     @OneToMany(mappedBy = "employee")
     private Set<Shift> shifts = new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL)
@@ -56,4 +36,10 @@ public class Employee extends Person {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "adminEmployee", referencedColumnName = "id")
     private AdminEmployee adminEmployee;
+
+    public Employee(String firstname, String lastname, LocalDate birthDate, BigDecimal rate, BigDecimal bonus) {
+        super(firstname, lastname, birthDate);
+        this.rate = rate;
+        this.bonus = bonus;
+    }
 }

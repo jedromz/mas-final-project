@@ -1,11 +1,10 @@
 package com.mas.pjatk.masfinalproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,16 +13,15 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FullTimeEmployee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class FullTimeEmployee extends Employee {
+
     private Integer workTime;
-    @OneToOne(mappedBy = "fullTimeEmployee")
-    private Employee employee;
     @OneToMany(mappedBy = "fullTimeEmployee")
     private Set<Vacation> vacations = new HashSet<>();
-    public FullTimeEmployee(Integer workTime) {
+
+    @Builder
+    public FullTimeEmployee(String firstname, String lastname, LocalDate birthDate, BigDecimal rate, BigDecimal bonus, Integer workTime) {
+        super(firstname, lastname, birthDate, rate, bonus);
         this.workTime = workTime;
     }
 }

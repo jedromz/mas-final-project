@@ -7,13 +7,13 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 
+@Entity
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@EqualsAndHashCode(exclude = "id")
 public abstract class Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;

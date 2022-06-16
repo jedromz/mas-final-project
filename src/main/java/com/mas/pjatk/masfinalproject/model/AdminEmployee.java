@@ -15,7 +15,7 @@ public class AdminEmployee {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private boolean deleted;
-    @OneToOne(mappedBy = "contractEmployee")
+    @OneToOne(mappedBy = "adminEmployee")
     private Employee employee;
 
 }

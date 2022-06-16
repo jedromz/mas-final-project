@@ -19,7 +19,7 @@ public class Director {
     private Long id;
     private LocalDate termStart;
     private LocalDate termEnd;
-    @OneToOne(mappedBy = "contractEmployee")
+    @OneToOne(mappedBy = "director")
     private Employee employee;
 
     public Director(LocalDate termStart, LocalDate termEnd) {

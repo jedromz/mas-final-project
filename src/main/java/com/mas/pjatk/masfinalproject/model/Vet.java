@@ -21,7 +21,7 @@ public class Vet {
     private boolean deleted;
     @OneToMany(mappedBy = "vet")
     private Set<Visit> visits = new HashSet<>();
-    @OneToOne(mappedBy = "contractEmployee")
+    @OneToOne(mappedBy = "vet")
     private Employee employee;
 
     public Vet(String vetLicense, String specialization) {

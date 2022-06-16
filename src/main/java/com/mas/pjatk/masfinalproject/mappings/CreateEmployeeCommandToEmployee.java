@@ -7,17 +7,6 @@ import org.modelmapper.spi.MappingContext;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateEmployeeCommandToEmployee implements Converter<ICreateEmployeeCommand, Employee> {
-    @Override
-    public Employee convert(MappingContext<ICreateEmployeeCommand, Employee> mappingContext) {
-        ICreateEmployeeCommand command = mappingContext.getSource();
-        Employee employee = Employee.builder()
-                .firstname(command.getFirstname())
-                .lastname(command.getLastname())
-                .birthDate(command.getBirthDate())
-                .rate(command.getRate())
-                .bonus(command.getBonus())
-                .build();
-        return employee;
-    }
+public class CreateEmployeeCommandToEmployee  {
+
 }
