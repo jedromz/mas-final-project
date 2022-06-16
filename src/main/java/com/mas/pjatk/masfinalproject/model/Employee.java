@@ -42,4 +42,5 @@ public abstract class Employee extends Person {
         this.rate = rate;
         this.bonus = bonus;
     }
+
 }

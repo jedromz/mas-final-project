@@ -12,9 +12,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class ContractEmployee extends Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private LocalDate contractStart;
     private LocalDate contractEnd;
 

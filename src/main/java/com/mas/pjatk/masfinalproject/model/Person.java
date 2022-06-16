@@ -30,4 +30,8 @@ public abstract class Person {
     public Integer age() {
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
+
+    public Person(Long id) {
+        this.id = id;
+    }
 }

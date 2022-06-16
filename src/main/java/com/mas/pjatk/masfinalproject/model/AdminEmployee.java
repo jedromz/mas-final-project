@@ -17,5 +17,4 @@ public class AdminEmployee {
     private boolean deleted;
     @OneToOne(mappedBy = "adminEmployee")
     private Employee employee;
-
 }

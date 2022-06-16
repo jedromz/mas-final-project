@@ -1,20 +1,15 @@
 package com.mas.pjatk.masfinalproject.service;
 
-import com.mas.pjatk.masfinalproject.error.EntityNotFoundException;
-import com.mas.pjatk.masfinalproject.mappings.ICreateEmployeeCommand;
 import com.mas.pjatk.masfinalproject.model.*;
 import com.mas.pjatk.masfinalproject.model.command.*;
 import com.mas.pjatk.masfinalproject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 
 @Service
@@ -23,12 +18,17 @@ import java.util.Set;
 public class EmployeeService {
 
     private final AdminEmployeeRepository adminEmployeeRepository;
+    private final EmployeeRepository employeeRepository;
     private final VetRepository vetRepository;
     private final DirectorRepository directorRepository;
     private final FullTimeEmployeeRepository fullTimeEmployeeRepository;
     private final ContractEmployeeRepository contractEmployeeRepository;
-    private final ModelMapper modelMapper;
 
+
+    public List<Employee> findAllEmployees() {
+        return employeeRepository.findAll();
+
+    }
 
     @Transactional
     public Employee addAdminEmployeeFullTime(CreateFullTimeAdminEmployeeCommand command) {

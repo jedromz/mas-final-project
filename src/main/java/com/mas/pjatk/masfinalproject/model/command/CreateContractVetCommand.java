@@ -1,6 +1,5 @@
 package com.mas.pjatk.masfinalproject.model.command;
 
-import com.mas.pjatk.masfinalproject.mappings.ICreateEmployeeCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

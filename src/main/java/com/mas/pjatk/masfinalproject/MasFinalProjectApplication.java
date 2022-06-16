@@ -56,12 +56,12 @@ public class MasFinalProjectApplication {
                 LocalDate localDateFuture = future.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 LocalDate localDatePast = past.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 int workTime = 160;
-                employeeService.addAdminEmployeeContract(new CreateContractAdminEmployeeCommand(firstname, lastname, localDateBirthdate, rate, rate, localDatePast, localDateFuture));
-                employeeService.addAdminEmployeeFullTime(new CreateFullTimeAdminEmployeeCommand(firstname, lastname, localDateBirthdate, rate, rate, workTime));
-                employeeService.addDirectorContract(new CreateContractDirectorCommand(firstname, lastname, localDateBirthdate, rate, rate, localDatePast, localDateFuture, localDatePast, localDateFuture));
-                employeeService.addDirectorFullTime(new CreateFullTimeDirector(firstname, lastname, localDateBirthdate, rate, rate, localDatePast, localDateFuture, workTime));
-                employeeService.addVetFullTime(new CreateFullTimeVetCommand(firstname, lastname, localDateBirthdate, rate, rate, faker.random().hex(), faker.animal().name(), workTime));
-                employeeService.addVetContract(new CreateContractVetCommand(firstname, lastname, localDateBirthdate, rate, rate, faker.random().hex(), faker.animal().name(), localDatePast, localDateFuture));
+                employeeService.addAdminEmployeeContract(new CreateContractAdminEmployeeCommand(faker.name().firstName(), faker.name().lastName(), localDateBirthdate, rate, rate, localDatePast, localDateFuture));
+                employeeService.addAdminEmployeeFullTime(new CreateFullTimeAdminEmployeeCommand(faker.name().firstName(), faker.name().lastName(),localDateBirthdate, rate, rate, workTime));
+                employeeService.addDirectorContract(new CreateContractDirectorCommand(faker.name().firstName(), faker.name().lastName(), localDateBirthdate, rate, rate, localDatePast, localDateFuture, localDatePast, localDateFuture));
+                employeeService.addDirectorFullTime(new CreateFullTimeDirector(faker.name().firstName(), faker.name().lastName(), localDateBirthdate, rate, rate, localDatePast, localDateFuture, workTime));
+                employeeService.addVetFullTime(new CreateFullTimeVetCommand(faker.name().firstName(), faker.name().lastName(), localDateBirthdate, rate, rate, faker.random().hex(), faker.animal().name(), workTime));
+                employeeService.addVetContract(new CreateContractVetCommand(faker.name().firstName(), faker.name().lastName(), localDateBirthdate, rate, rate, faker.random().hex(), faker.animal().name(), localDatePast, localDateFuture));
             }
         };
     }

@@ -1,18 +1,16 @@
 package com.mas.pjatk.masfinalproject.model.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-@Builder
 @Getter
 @Setter
-public class AdminEmployeeDto {
-    private Long employeeId;
-    private Long adminEmployeeId;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmployeeDto {
+    private Long id;
     private String firstname;
     private String lastname;
     private LocalDate birthDate;

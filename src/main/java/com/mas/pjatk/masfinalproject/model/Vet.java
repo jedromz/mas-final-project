@@ -9,9 +9,9 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
-@Builder
 public class Vet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
