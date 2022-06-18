@@ -5,11 +5,16 @@ import com.mas.pjatk.masfinalproject.model.command.*;
 import com.mas.pjatk.masfinalproject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
+
+import static java.lang.Math.toIntExact;
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 
 @Service
@@ -27,6 +32,14 @@ public class EmployeeService {
 
     public List<Employee> findAllEmployees() {
         return employeeRepository.findAll();
+
+    }
+
+    public List<Vet> findAvailableVets(LocalDateTime from, LocalDateTime to) {
+        return vetRepository.findByVisits_DateAndVisits_StartTimeIsBetweenAndVisits_EndTimeIsBetween(from.toLocalDate(), from.toLocalTime(), to.toLocalTime());
+    }
+
+    public List<Visit> getFreeIntervals(LocalDateTime from, LocalDateTime to) {
 
     }
 

@@ -1,12 +1,12 @@
 package com.mas.pjatk.masfinalproject.controller;
 
-import com.mas.pjatk.masfinalproject.model.Person;
 import com.mas.pjatk.masfinalproject.model.dto.EmployeeDto;
 import com.mas.pjatk.masfinalproject.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,19 +23,18 @@ public class EmployeeController {
 //        return new ResponseEntity(modelMapper.map(savedAdminEmployee, AdminEmployeeDto.class), HttpStatus.CREATED);
 //    }
 
-    @GetMapping()
-    public List<Long> findAllEmployees() {
-        return employeeService.findAllEmployees().stream()
-                .map(Person::getId)
-                .toList();
-    }
 
-    @GetMapping("/2")
-    public List<EmployeeDto> finAllEmployees2() {
+    @GetMapping()
+    public List<EmployeeDto> findAllEmployees2() {
         return employeeService.findAllEmployees().stream()
                 .map(e -> modelMapper.map(e, EmployeeDto.class))
                 .toList();
     }
+
+//    @GetMapping("/vets/available")
+//    public List<EmployeeDto> findAvailableVets(@RequestParam LocalDateTime from, @RequestParam LocalDateTime to) {
+//        employeeService.findAvailableVets(from,to);
+//    }
 
 //    @GetMapping("/admin-employees/{id}")
 //    @SneakyThrows
