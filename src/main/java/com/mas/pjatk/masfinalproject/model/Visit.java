@@ -30,4 +30,13 @@ public class Visit {
     @ManyToOne
     @JoinColumn(name="patient_id", nullable=false)
     private Patient patient;
+
+    @Override
+    public String toString() {
+        return "Visit{" +
+                "date=" + date +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }

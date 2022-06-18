@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,9 @@ public class VisitService {
     public Visit getVisit(Long id) throws EntityNotFoundException {
         return visitRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("VISIT", id.toString()));
+    }
+    public List<Visit> findAllVisits(){
+        return visitRepository.findAll();
     }
 
     public Page<Visit> getAllVisit(Pageable pageable) {

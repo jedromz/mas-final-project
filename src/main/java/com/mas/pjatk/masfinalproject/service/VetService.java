@@ -25,6 +25,12 @@ public class VetService {
                 .orElseThrow(() -> new EntityNotFoundException("VET", id.toString()));
     }
 
+    public Vet findVetWithVisits(Long id) throws EntityNotFoundException {
+        return vetRepository.findVetWithVisits(id)
+                .orElseThrow(() -> new EntityNotFoundException("VET", id.toString()));
+    }
+
+
     public Page<Vet> getAllVets(Pageable pageable) {
         return vetRepository.findAll(pageable);
     }
