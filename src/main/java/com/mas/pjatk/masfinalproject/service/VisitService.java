@@ -9,8 +9,6 @@ import com.mas.pjatk.masfinalproject.repository.PatientRepository;
 import com.mas.pjatk.masfinalproject.repository.VetRepository;
 import com.mas.pjatk.masfinalproject.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,16 +24,8 @@ public class VisitService {
     private final VetRepository vetRepository;
 
 
-    public Visit getVisit(Long id) throws EntityNotFoundException {
-        return visitRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("VISIT", id.toString()));
-    }
     public List<Visit> findAllVisits(){
         return visitRepository.findAll();
-    }
-
-    public Page<Visit> getAllVisit(Pageable pageable) {
-        return visitRepository.findAll(pageable);
     }
 
     @Transactional
@@ -54,10 +44,4 @@ public class VisitService {
         return visitRepository.saveAndFlush(visit);
     }
 
-    @Transactional
-    public void softDeleteById(Long id) throws EntityNotFoundException {
-        Visit visit = visitRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("VISIT", id.toString()));
-        visit.setDeleted(true);
-    }
 }

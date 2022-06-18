@@ -26,4 +26,19 @@ public class Shift {
     @ManyToOne
     @JoinColumn(name = "employee_id",nullable = false)
     private Employee  employee;
+
+    public Shift(LocalDate date, LocalTime startTime, LocalTime endTime) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Shift{" +
+                "date=" + date +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }

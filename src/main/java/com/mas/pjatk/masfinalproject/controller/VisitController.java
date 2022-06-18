@@ -1,16 +1,17 @@
 package com.mas.pjatk.masfinalproject.controller;
 
 import com.mas.pjatk.masfinalproject.model.Visit;
-import com.mas.pjatk.masfinalproject.model.command.CreatePatientCommand;
 import com.mas.pjatk.masfinalproject.model.command.CreateVisitCommand;
-import com.mas.pjatk.masfinalproject.model.dto.EmployeeDto;
 import com.mas.pjatk.masfinalproject.model.dto.VisitDto;
 import com.mas.pjatk.masfinalproject.service.VisitService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

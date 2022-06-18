@@ -1,5 +1,6 @@
 package com.mas.pjatk.masfinalproject.service;
 
+import com.mas.pjatk.masfinalproject.error.EntityNotFoundException;
 import com.mas.pjatk.masfinalproject.model.*;
 import com.mas.pjatk.masfinalproject.model.command.*;
 import com.mas.pjatk.masfinalproject.repository.*;
@@ -8,12 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import static java.lang.Math.toIntExact;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 
@@ -22,12 +22,11 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 @Slf4j
 public class EmployeeService {
 
-    private final AdminEmployeeRepository adminEmployeeRepository;
     private final EmployeeRepository employeeRepository;
-    private final VetRepository vetRepository;
-    private final DirectorRepository directorRepository;
+    private final ShiftRepository shiftRepository;
     private final FullTimeEmployeeRepository fullTimeEmployeeRepository;
     private final ContractEmployeeRepository contractEmployeeRepository;
+    private final VisitRepository visitRepository;
 
 
     public List<Employee> findAllEmployees() {
@@ -35,12 +34,37 @@ public class EmployeeService {
 
     }
 
-    public List<Vet> findAvailableVets(LocalDateTime from, LocalDateTime to) {
-        return vetRepository.findByVisits_DateAndVisits_StartTimeIsBetweenAndVisits_EndTimeIsBetween(from.toLocalDate(), from.toLocalTime(), to.toLocalTime());
+    public List<Visit> findPossibleVisitsForVet(Long employeeId, LocalDateTime from, LocalDateTime to) throws EntityNotFoundException {
+        Shift shift = shiftRepository.findByEmployee_IdAndDate(employeeId, from.toLocalDate())
+                .orElseThrow(() -> new EntityNotFoundException("EMPLOYEE_ID", employeeId.toString()));
+        List<Visit> existingVisits = visitRepository.findByVet_Employee_IdAndDate(employeeId, from.toLocalDate());
+        LocalTime start = shift.getStartTime();
+        LocalTime end = existingVisits.get(0).getStartTime();
+        List<Visit> possibleVisits = new ArrayList<>();
+        findFreeInterval(from, to, shift, existingVisits, start, end, possibleVisits);
+        return possibleVisits;
     }
 
-    public List<Visit> getFreeIntervals(LocalDateTime from, LocalDateTime to) {
+    private void findFreeInterval(LocalDateTime from, LocalDateTime to, Shift shift, List<Visit> existingVisits, LocalTime start, LocalTime end, List<Visit> possibleVisits) {
+        addVisitIfFreeInterval(start, end, from, to, possibleVisits);
+        for (int i = 0; i < existingVisits.size() - 1; i++) {
+            start = existingVisits.get(i).getEndTime();
+            end = existingVisits.get(i + 1).getStartTime();
+            addVisitIfFreeInterval(start, end, from, to, possibleVisits);
+        }
+        start = existingVisits.get(existingVisits.size() - 1).getEndTime();
+        end = shift.getEndTime();
+        addVisitIfFreeInterval(start, end, from, to, possibleVisits);
+    }
 
+    private void addVisitIfFreeInterval(LocalTime start, LocalTime end, LocalDateTime from, LocalDateTime to, List<Visit> possibleVisits) {
+        if (MINUTES.between(start, end) > MINUTES.between(from, to)) {
+            possibleVisits.add(Visit.builder()
+                    .date(from.toLocalDate())
+                    .startTime(start)
+                    .endTime(start.plusMinutes(MINUTES.between(from, to)))
+                    .build());
+        }
     }
 
     @Transactional
