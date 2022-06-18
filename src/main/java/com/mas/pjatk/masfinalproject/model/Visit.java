@@ -31,6 +31,13 @@ public class Visit {
     @JoinColumn(name="patient_id", nullable=false)
     private Patient patient;
 
+    public Visit(LocalDate date, LocalTime startTime, LocalTime endTime, BigDecimal charge) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.charge = charge;
+    }
+
     @Override
     public String toString() {
         return "Visit{" +

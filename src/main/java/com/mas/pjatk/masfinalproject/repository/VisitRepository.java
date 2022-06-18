@@ -9,4 +9,9 @@ import java.util.List;
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     List<Visit> findByVet_Employee_IdAndDate(Long id, LocalDate date);
+
+    List<Visit> findByVet_IdAndDate(Long id, LocalDate date);
+
+    List<Visit> findByPatient_IdAndDate(Long id, LocalDate date);
+
 }

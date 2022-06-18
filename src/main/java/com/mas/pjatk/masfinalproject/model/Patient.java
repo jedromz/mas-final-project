@@ -29,6 +29,13 @@ public class Patient {
     @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
 
+    public Patient(String name, LocalDate birthDate, String type, String race) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.type = type;
+        this.race = race;
+    }
+
     public Integer age() {
         return Period.between(birthDate, LocalDate.now()).getYears();
     }

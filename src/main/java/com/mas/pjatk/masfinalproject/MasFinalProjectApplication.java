@@ -76,10 +76,10 @@ public class MasFinalProjectApplication {
                 shiftRepository.saveAndFlush(e1);
             }
             visitService.saveVisit(CreateVisitCommand.builder().vetId(1l).patientId(1l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
-            visitService.saveVisit(CreateVisitCommand.builder().vetId(1l).patientId(1l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
-            visitService.saveVisit(CreateVisitCommand.builder().vetId(1l).patientId(1l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
-            visitService.saveVisit(CreateVisitCommand.builder().vetId(1l).patientId(1l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
-            visitService.saveVisit(CreateVisitCommand.builder().vetId(1l).patientId(1l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
+            visitService.saveVisit(CreateVisitCommand.builder().vetId(2l).patientId(2l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
+            visitService.saveVisit(CreateVisitCommand.builder().vetId(3l).patientId(3l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
+            visitService.saveVisit(CreateVisitCommand.builder().vetId(4l).patientId(4l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
+            //visitService.saveVisit(CreateVisitCommand.builder().vetId(5l).patientId(5l).date(LocalDate.now()).endTime(LocalTime.now().plusMinutes(30)).startTime(LocalTime.now().minusMinutes(30)).build());
             vetService.findVetWithVisits(1l).getVisits().forEach(System.out::println);
             LocalDateTime from = LocalDateTime.now().minusMinutes(5);
             LocalDateTime to = LocalDateTime.now().plusMinutes(5);
@@ -91,6 +91,14 @@ public class MasFinalProjectApplication {
             System.out.println(visitRepository.findByVet_Employee_IdAndDate(11L, LocalDate.now()).size());
             List<Visit> freeIntervals = employeeService.findPossibleVisitsForVet(11L, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10));
             freeIntervals.forEach(System.out::println);
+            CreateVisitCommand command = CreateVisitCommand.builder()
+                    .vetId(1L)
+                    .patientId(1L)
+                    .date(LocalDate.now())
+                    .startTime(LocalTime.now().plusHours(3))
+                    .endTime(LocalTime.now().plusHours(5))
+                    .build();
+            visitService.saveVisit(command);
         };
 
 
