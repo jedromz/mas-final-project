@@ -23,6 +23,7 @@ public class Shift {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
+
     @ManyToOne
     @JoinColumn(name = "employee_id",nullable = false)
     private Employee  employee;

@@ -19,6 +19,9 @@ public class Director {
     private LocalDate termEnd;
     @OneToOne(mappedBy = "director")
     private Employee employee;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hospital_id", referencedColumnName = "id")
+    private Hospital hospital;
 
     public Director(LocalDate termStart, LocalDate termEnd) {
         this.termStart = termStart;

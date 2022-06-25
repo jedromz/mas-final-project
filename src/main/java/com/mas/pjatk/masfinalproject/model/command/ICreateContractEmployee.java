@@ -17,4 +17,5 @@ public interface ICreateContractEmployee {
     LocalDate getContractStart();
 
     LocalDate getContractEnd();
+    Long getHospitalId();
 }

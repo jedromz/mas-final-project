@@ -1,13 +1,9 @@
 package com.mas.pjatk.masfinalproject.service;
 
 import com.mas.pjatk.masfinalproject.error.VisitTimeConflictException;
-import com.mas.pjatk.masfinalproject.model.Patient;
-import com.mas.pjatk.masfinalproject.model.Vet;
-import com.mas.pjatk.masfinalproject.model.Visit;
+import com.mas.pjatk.masfinalproject.model.*;
 import com.mas.pjatk.masfinalproject.model.command.CreateVisitCommand;
-import com.mas.pjatk.masfinalproject.repository.PatientRepository;
-import com.mas.pjatk.masfinalproject.repository.VetRepository;
-import com.mas.pjatk.masfinalproject.repository.VisitRepository;
+import com.mas.pjatk.masfinalproject.repository.*;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -39,6 +35,11 @@ class VisitServiceTest {
     private PatientRepository patientRepository;
     @Mock
     private VetRepository vetRepository;
+    @Mock
+    private ShiftRepository shiftRepository;
+
+    @Mock
+    private VacationRepository vacationRepository;
     private Vet TEST_VET_1;
     private Patient TEST_PATIENT_1;
     private LocalDate date;
@@ -53,20 +54,14 @@ class VisitServiceTest {
         startTime = LocalTime.now();
         endTime = startTime.plusMinutes(15);
         charge = BigDecimal.valueOf(140.0);
-        visitService = new VisitService(visitRepository, patientRepository, vetRepository);
+        visitService = new VisitService(visitRepository, patientRepository, vetRepository, shiftRepository, vacationRepository);
         TEST_VET_1 = new Vet("TEST", "TEST");
         TEST_PATIENT_1 = new Patient("TEST", date.minusYears(10), "TEST", "TEST");
         TEST_PATIENT_1.getVisits().add(new Visit(date, startTime, endTime, charge));
         TEST_VET_1.getVisits().add(new Visit(date, startTime, endTime, charge));
     }
-
-    @AfterEach
-    void tearDown() {
-        vetRepository.deleteAll();
-    }
-
     @Test
-    void saveNotSaveVisit() {
+    void shouldNotSaveVisit() {
         VisitTimeConflictException thrown = Assertions.assertThrows(VisitTimeConflictException.class, () -> {
             CreateVisitCommand command = CreateVisitCommand.builder()
                     .vetId(1L)
@@ -80,6 +75,8 @@ class VisitServiceTest {
             when(visitRepository.findByPatient_IdAndDate(anyLong(), any())).thenReturn(new ArrayList<>(TEST_PATIENT_1.getVisits()));
             when(vetRepository.findVetWithVisits(anyLong())).thenReturn(Optional.of(TEST_VET_1));
             when(patientRepository.findByIdWithVisits(anyLong())).thenReturn(Optional.of(TEST_PATIENT_1));
+            when(vacationRepository.existsByFullTimeEmployee_IdAndStartBetweenAndEndBetween(any(), any())).thenReturn(true);
+            when(shiftRepository.existsByDateAfterAndEmployee_IdAndStartTimeBeforeAndEndTimeAfter(any(), any(), any(), any())).thenReturn(false);
             visitService.saveVisit(command);
         });
         Assertions.assertEquals("VISIT_TIME_CONFLICT", thrown.getMessage());
@@ -100,6 +97,12 @@ class VisitServiceTest {
         when(visitRepository.findByPatient_IdAndDate(anyLong(), any())).thenReturn(new ArrayList<>(TEST_PATIENT_1.getVisits()));
         when(vetRepository.findVetWithVisits(anyLong())).thenReturn(Optional.of(TEST_VET_1));
         when(patientRepository.findByIdWithVisits(anyLong())).thenReturn(Optional.of(TEST_PATIENT_1));
+        when(vacationRepository.existsByFullTimeEmployee_IdAndStartBetweenAndEndBetween(any(), any())).thenReturn(false);
+        when(shiftRepository.existsByDateAfterAndEmployee_IdAndStartTimeBeforeAndEndTimeAfter(any(), any(), any(), any())).thenReturn(true);
         visitService.saveVisit(command);
+    }
+
+    void shouldChangeFromFullTimeToContract() {
+
     }
 }

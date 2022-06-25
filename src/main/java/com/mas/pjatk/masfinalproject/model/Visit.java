@@ -21,6 +21,7 @@ public class Visit {
     private LocalTime startTime;
     private LocalTime endTime;
     private BigDecimal charge;
+    private String notes;
     private boolean deleted;
     private boolean confirmed;
     private boolean cancelled;

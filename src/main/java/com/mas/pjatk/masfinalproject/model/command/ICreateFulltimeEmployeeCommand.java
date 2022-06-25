@@ -15,4 +15,5 @@ public interface ICreateFulltimeEmployeeCommand {
     BigDecimal getRate();
 
     Integer getWorkTime();
+    Long getHospitalId();
 }

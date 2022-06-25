@@ -1,9 +1,6 @@
 package com.mas.pjatk.masfinalproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.yaml.snakeyaml.events.Event;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Embeddable
+@EqualsAndHashCode(exclude = "{id}")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +20,10 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "hospital_id", nullable = false)
     private Hospital hospital;
+    private boolean deleted;
+
+    public Room(String number) {
+        this.number = number;
+
+    }
 }

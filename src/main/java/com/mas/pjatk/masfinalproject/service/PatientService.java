@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PatientService {
@@ -20,6 +23,12 @@ public class PatientService {
         return patientRepository.saveAndFlush(patient);
     }
 
+    /**
+     * Add patient and assign owner
+     * @param command needed to create Patient
+     * @return added and saved Patient
+     * @throws EntityNotFoundException
+     */
     @Transactional
     public Patient savePatient(CreatePatientCommand command) throws EntityNotFoundException {
         Owner owner = ownerRepository.findById(command.getOwnerId())
@@ -32,5 +41,13 @@ public class PatientService {
                 .owner(owner)
                 .build();
         return patientRepository.saveAndFlush(patient);
+    }
+
+    public List<Patient> findAll() {
+        return patientRepository.findAll();
+    }
+    public Patient findById(Long id) throws EntityNotFoundException {
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("PATIENT_ID", id.toString()));
     }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,9 +21,18 @@ public class Hospital {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private boolean deleted;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     @OneToMany(mappedBy = "hospital")
-    private Set<Room> room;
+    private Set<Room> rooms = new HashSet<>();
+    @OneToMany(mappedBy = "hospital")
+    private Set<Employee> employees = new HashSet<>();
+
+
+    public Hospital(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
 }

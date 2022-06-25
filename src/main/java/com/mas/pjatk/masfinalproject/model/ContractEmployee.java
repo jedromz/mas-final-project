@@ -11,7 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ContractEmployee extends Employee {
+public class
+ContractEmployee extends Employee {
     private LocalDate contractStart;
     private LocalDate contractEnd;
 

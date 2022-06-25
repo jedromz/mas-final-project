@@ -22,7 +22,6 @@ public class Patient {
     private LocalDate birthDate;
     private String type;
     private String race;
-    private boolean deleted;
     @OneToMany(mappedBy = "patient")
     private Set<Visit> visits = new HashSet<>();
     @ManyToOne

@@ -19,9 +19,10 @@ public class EmployeeController {
     private final ModelMapper modelMapper;
 
     @GetMapping()
-    public List<EmployeeDto> findAllEmployees2() {
+    public List<EmployeeDto> findAllEmployees() {
         return employeeService.findAllEmployees().stream()
                 .map(e -> modelMapper.map(e, EmployeeDto.class))
                 .toList();
     }
+
 }

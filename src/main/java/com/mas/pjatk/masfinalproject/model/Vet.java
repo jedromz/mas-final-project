@@ -18,7 +18,6 @@ public class Vet {
     private Long id;
     private String vetLicense;
     private String specialization;
-    private boolean deleted;
     @OneToMany(mappedBy = "vet")
     private Set<Visit> visits = new HashSet<>();
     @OneToOne(mappedBy = "vet")
